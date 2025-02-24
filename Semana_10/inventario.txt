@@ -1,1 +1,2 @@
-l,l,1,1.0
+ID,Nombre,Cantidad,Precio
+1,Cola,50,1.5

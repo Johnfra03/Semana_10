@@ -39,6 +39,7 @@ class Inventario:
     def guardar_inventario(self):
         try:
             with open(self.ARCHIVO_INVENTARIO, "w") as archivo:
+                archivo.write("ID,Nombre,Cantidad,Precio\n")
                 for producto in self.productos:
                     archivo.write(f"{producto.obtener_id()},{producto.obtener_nombre()},{producto.obtener_cantidad()},{producto.obtener_precio()}\n")
         except PermissionError:
@@ -49,6 +50,7 @@ class Inventario:
             return
         try:
             with open(self.ARCHIVO_INVENTARIO, "r") as archivo:
+                next(archivo)  # Saltar la primera línea (encabezado)
                 for linea in archivo:
                     id_producto, nombre_producto, cantidad_producto, precio_producto = linea.strip().split(",")
                     producto = Producto(id_producto, nombre_producto, int(cantidad_producto), float(precio_producto))
@@ -97,8 +99,11 @@ class Inventario:
         if not self.productos:
             print("El inventario está vacío.")
         else:
+            print("\nLista de Productos:")
+            print("ID | Nombre | Cantidad | Precio")
+            print("----------------------------------")
             for producto in self.productos:
-                print(f"Producto: {producto}")
+                print(f"{producto.obtener_id()} | {producto.obtener_nombre()} | {producto.obtener_cantidad()} | ${producto.obtener_precio():.2f}")
 
 
 def menu():
